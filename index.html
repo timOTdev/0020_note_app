@@ -13,13 +13,19 @@
 
     <script type="text/babel">
       var Note = React.createClass({
+        edit() {
+          alert("Editing Note")
+        },
+        remove() {
+          alert("Removing Note")
+        },
         render() {
           return (
             <div className="note">
-              <p></p>
+              <p>{this.props.children}</p>
               <span>
-                <button>Edit</button>
-                <button>Remove</button>
+                <button onClick={this.edit}>Edit</button>
+                <button onClick={this.remove}>Remove</button>
               </span>
             </div>
           )
@@ -27,7 +33,7 @@
       })
 
       ReactDOM.render(
-        <Note></Note>,
+        <Note>Hello World</Note>,
         document.getElementById('react-container')
       )
     </script>
