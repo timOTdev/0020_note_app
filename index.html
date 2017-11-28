@@ -4,8 +4,9 @@
       <script src="https://fb.me/react-15.2.1.js"></script>
       <script src="https://fb.me/react-dom-15.2.1.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+      <script src="https://npmcdn.com/react-draggable"></script>
       <link rel="stylesheet" type="text/css" href="style.css">
-    <title>The Nice Note App by Timothy Hoang</title>
+    <title>The Nifty Note App by Timothy Hoang</title>
   </head>
 
   <body>
@@ -22,6 +23,17 @@
             right: this.randomBetween(0, window.innerWidth - 150, 'px'),
             top: this.randomBetween(0, window.innerHeight - 150, 'px'),
           }
+        },
+
+        componentDidUpdate() {
+          if (this.state.editing) {
+            this.refs.newText.focus()
+            this.refs.newText.select()
+          }
+        },
+
+        shouldComponentUpdate(nextProps, nextState) {
+          return this.props.children !== nextProps.children || this.state !== nextState
         },
 
         randomBetween(x, y, s) {
@@ -45,7 +57,9 @@
           return (
             <div className="note"
                  style={this.style}>
-              <textarea ref="newText"></textarea>
+              <textarea ref="newText"
+                        defaultValue={this.props.children}>
+              </textarea>
               <button onClick={this.save}>Save</button>
             </div>
           )
@@ -65,8 +79,12 @@
         },
 
         render() {
-          return (this.state.editing) ? this.renderForm() 
-                                      : this.renderDisplay()
+          return ( 
+            <ReactDraggable>
+              {(this.state.editing) ? this.renderForm() 
+                                        : this.renderDisplay()}
+            </ReactDraggable>
+          )
         }
       })
 
@@ -85,6 +103,12 @@
         getInitialState() {
           return {
             notes: []
+          }
+        },
+
+        componentWillMount() {
+          if (this.props.count) {
+            {this.add("New Note")}
           }
         },
 
@@ -142,7 +166,7 @@
       })
 
       ReactDOM.render(
-        <Board count={10} />,
+        <Board count={3} />,
         document.getElementById('react-container')
       )
     </script>
