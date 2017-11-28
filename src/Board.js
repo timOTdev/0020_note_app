@@ -21,7 +21,7 @@ class Board extends React.Component {
 
   componentWillMount() {
     if (this.props.count) {
-      {this.add("New Note")}
+      this.add("New Note")
     }
   }
 
