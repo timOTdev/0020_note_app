@@ -2,47 +2,45 @@ import React from 'react'
 import './App.css'
 import ReactDraggable from 'react-draggable'
 
-var Note = React.createClass({
-  getInitialState() {
-    return {editing: false}
-  },
+class Note extends React.Component {
+  state = {editing: false};
 
   componentWillMount() {
     this.style = {
       right: this.randomBetween(0, window.innerWidth - 150, 'px'),
       top: this.randomBetween(0, window.innerHeight - 150, 'px'),
     }
-  },
+  }
 
   componentDidUpdate() {
     if (this.state.editing) {
       this.refs.newText.focus()
       this.refs.newText.select()
     }
-  },
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.children !== nextProps.children || this.state !== nextState
-  },
+  }
 
-  randomBetween(x, y, s) {
+  randomBetween = (x, y, s) => {
     return (x + Math.ceil(Math.random() * (y-x))) + s
-  },
-  
-  edit() {
-    this.setState({editing: true})
-  },
+  };
 
-  save() {
+  edit = () => {
+    this.setState({editing: true})
+  };
+
+  save = () => {
     this.props.onChange(this.refs.newText.value, this.props.id)
     this.setState({editing: false})
-  },
+  };
 
-  remove() {
+  remove = () => {
     this.props.onRemove(this.props.id)
-  },
+  };
 
-  renderForm() {
+  renderForm = () => {
     return (
       <div className="note"
            style={this.style}>
@@ -52,9 +50,9 @@ var Note = React.createClass({
         <button onClick={this.save}>Save</button>
       </div>
     )
-  },
+  };
 
-  renderDisplay(){
+  renderDisplay = () => {
     return (
       <div className="note"
            style={this.style}>
@@ -65,7 +63,7 @@ var Note = React.createClass({
         </span>
       </div>
     )
-  },
+  };
 
   render() {
     return ( 
@@ -75,6 +73,6 @@ var Note = React.createClass({
       </ReactDraggable>
     )
   }
-})
+}
 
 export default Note

@@ -9,6 +9,7 @@ div#react-container {
 }
 
 body {
+  background: #eab92d;
   margin: 0;
   padding: 0;
 }
@@ -16,7 +17,6 @@ body {
 div.board {
   background-color: 'brown';
   width: 100%;
-  background: #eab92d;
 }
 
 div.note {

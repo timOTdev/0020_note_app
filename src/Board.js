@@ -1,9 +1,10 @@
 import React from 'react'
 import './App.css'
+import './index.css'
 import Note from './Note'
 
-var Board = React.createClass({
-  propTypes: {
+class Board extends React.Component {
+  static propTypes = {
     count: function(props, propName) {
       if(typeof props[propName] !== "number") {
         return new Error("The count must be a number")
@@ -12,26 +13,24 @@ var Board = React.createClass({
         return new Error("Creating " + props[propName] + " notes is too high")
       }
     }
-  },
+  };
 
-  getInitialState() {
-    return {
-      notes: []
-    }
-  },
+  state = {
+    notes: []
+  };
 
   componentWillMount() {
     if (this.props.count) {
       {this.add("New Note")}
     }
-  },
+  }
 
-  nextId() {
+  nextId = () => {
     this.uniqueId = this.uniqueId || 0
     return this.uniqueId++
-  },
+  };
 
-  add(text) {
+  add = (text) => {
     var notes = [
       ...this.state.notes,
       {
@@ -40,9 +39,9 @@ var Board = React.createClass({
       }
     ]
     this.setState({notes})
-  },
+  };
 
-  update(newText, id) {
+  update = (newText, id) => {
     var notes = this.state.notes.map(
       note => (note.id !== id) ? note :
         {
@@ -51,14 +50,14 @@ var Board = React.createClass({
         }
     )
     this.setState({notes})
-  },
+  };
 
-  remove(id) {
+  remove = (id) => {
     var notes = this.state.notes.filter(note => note.id !== id)
     this.setState({notes})
-  },
+  };
 
-  eachNote(note) {
+  eachNote = (note) => {
     return (
       <Note key={note.id}
             id={note.id}
@@ -67,7 +66,7 @@ var Board = React.createClass({
           {note.note}
       </Note>
     )
-  },
+  };
 
   render() {
     return (
@@ -77,6 +76,6 @@ var Board = React.createClass({
       </div>
     )
   }
-})
+}
 
 export default Board
